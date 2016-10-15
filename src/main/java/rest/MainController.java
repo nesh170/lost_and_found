@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
     @RequestMapping("/")
     public String hi() {
-        return "Hi this is an endpoint";
+        return "Hi this is an endpoint, lol hi Ankit";
     }
     @RequestMapping("/login/{userID}")
     public String login(@PathVariable String userID) {
