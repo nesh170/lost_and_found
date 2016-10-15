@@ -14,6 +14,10 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 
+springBoot {
+    executable = true
+}
+
 jar {
     baseName = 'lost_and_found'
     version = '0.1.0'
