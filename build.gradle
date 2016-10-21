@@ -33,6 +33,51 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile group: 'org.jinq', name: 'jinq-jpa', version: '0.4'
+    compile group: 'org.jooq', name: 'jooq', version: '3.4.5'
+    compile("org.jooq:jooq-meta:3.4.5")
+    compile group: 'org.jooq', name: 'jooq-codegen', version: '3.4.5'
 
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:1.0.5'
+        classpath 'postgresql:postgresql:9.1-901.jdbc4' // database-specific JDBC driver
+    }
+}
+apply plugin: 'nu.studer.jooq'
+
+jooq {
+    database_lost_and_found(sourceSets.main) {
+        jdbc {
+            driver = 'org.postgresql.Driver'
+            url = 'jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/testdb'
+            user = 'bitnami'
+            password = 'password'
+            schema = 'public'
+        }
+        generator {
+            name = 'org.jooq.util.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.util.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.util.postgres.PostgresDatabase'
+                inputSchema = 'public'
+            }
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = true
+                fluentSetters = true
+            }
+            target {
+                packageName = 'nu.studer.db'
+            }
+        }
+    }
 }
