@@ -1,5 +1,6 @@
 package rest;
 
+import dataaccessors.DataAccessors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class MainController {
     public String hi() {
         return "Hi this is an endpoint, lol hi Ankit";
     }
+
     @RequestMapping("/login/{userID}")
     public String login(@PathVariable String userID) {
         /*
@@ -25,5 +27,15 @@ public class MainController {
         our database to ensure that the user login is indeed valid and the user is a registered user.
          */
         return "Login Succeeded with userID: " + userID;
+    }
+
+    @RequestMapping("testdb")
+    public String testdb(){
+        DataAccessors dataAccess = new DataAccessors();
+        String lol = "";
+        for(String k:dataAccess.connectDatabase()){
+            lol = lol + k;
+        }
+        return lol;
     }
 }
