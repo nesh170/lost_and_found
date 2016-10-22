@@ -76,7 +76,7 @@ jooq {
                 fluentSetters = true
             }
             target {
-                packageName = 'nu.studer.db'
+                packageName = 'db'
             }
         }
     }

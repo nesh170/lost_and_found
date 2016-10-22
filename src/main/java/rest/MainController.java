@@ -1,9 +1,13 @@
 package rest;
 
-import dataaccessors.DataAccessors;
+import data.accessors.DatabaseManager;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static db.tables.Customers.CUSTOMERS;
 
 /**
  * Created by Ankit on 10/10/2016.
@@ -31,9 +35,10 @@ public class MainController {
 
     @RequestMapping("testdb")
     public String testdb(){
-        DataAccessors dataAccess = new DataAccessors();
+        DatabaseManager dataAccess = DatabaseManager.getInstance();
+        List<String> test = dataAccess.getDBQueryTool().select().from(CUSTOMERS).fetch().map(w -> w.getValue(CUSTOMERS.NAME));
         String lol = "";
-        for(String k:dataAccess.connectDatabase()){
+        for(String k:test){
             lol = lol + k;
         }
         return lol;
