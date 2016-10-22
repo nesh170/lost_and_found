@@ -5,10 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import static db.tables.Customers.CUSTOMERS;
-
 /**
  * Created by Ankit on 10/10/2016.
  * This class serves more as a proof of concept. Implementation is not there yet because we recently decided to use Spring
@@ -36,11 +32,6 @@ public class MainController {
     @RequestMapping("testdb")
     public String testdb(){
         DatabaseManager dataAccess = DatabaseManager.getInstance();
-        List<String> test = dataAccess.getDBQueryTool().select().from(CUSTOMERS).fetch().map(w -> w.getValue(CUSTOMERS.NAME));
-        String lol = "";
-        for(String k:test){
-            lol = lol + k;
-        }
-        return lol;
+        return dataAccess.toString();
     }
 }

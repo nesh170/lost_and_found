@@ -54,7 +54,7 @@ jooq {
     database_lost_and_found(sourceSets.main) {
         jdbc {
             driver = 'org.postgresql.Driver'
-            url = 'jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/testdb'
+            url = 'jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/lost_and_found_db'
             user = 'bitnami'
             password = 'password'
             schema = 'public'

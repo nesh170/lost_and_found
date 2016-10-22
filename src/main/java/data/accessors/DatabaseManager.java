@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DatabaseManager  {
     private static final String userName = "bitnami";
     private static final String password = "password";
-    private static final String url = "jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/testdb";
+    private static final String url = "jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/lost_and_found_db";
 
     private DSLContext myDBQuery;
     private Connection myConnection;
