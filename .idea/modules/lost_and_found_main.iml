@@ -17,6 +17,7 @@
     <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.4.5" level="project" />
     <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.4.5" level="project" />
     <orderEntry type="library" name="Gradle: org.postgresql:postgresql:9.3-1101-jdbc41" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.7" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator:5.2.4.Final" level="project" />

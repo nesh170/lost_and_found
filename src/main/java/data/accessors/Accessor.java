@@ -3,6 +3,7 @@ package data.accessors;
 
 import data.Item;
 import data.LostItem;
+import db.tables.records.LostItemsRecord;
 import db.tables.records.LostTagsRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -41,9 +42,12 @@ public class Accessor {
     }
 
     public int commitLostItemWithTags(Item lostItem){
-        return myContext.insertInto(LOST_ITEMS,
+        LostItemsRecord outputLostItem =  myContext.insertInto(LOST_ITEMS,
                 LOST_ITEMS.GEOLOCATION,LOST_ITEMS.TIME_STAMP,LOST_ITEMS.USER_UNIQUE_ID)
-                .values(lostItem.myLocation,lostItem.myTimestamp,lostItem.myUniqueID).execute();
+                .values(lostItem.myLocation,lostItem.myTimestamp,lostItem.myUniqueID).returning(LOST_ITEMS.ID).fetchOne();
+        lostItem.myID = outputLostItem.value1();
+        lostItem.myTags.forEach(tag -> myContext.insertInto(LOST_TAGS,LOST_TAGS.ID,LOST_TAGS.TAGS).values(lostItem.myID, tag).execute());
+        return lostItem.myID;
     }
 
 }
