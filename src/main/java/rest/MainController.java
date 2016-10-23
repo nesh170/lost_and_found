@@ -1,7 +1,7 @@
 package rest;
 
 import org.springframework.web.bind.annotation.*;
-import sun.plugin2.message.Message;
+
 
 /**
  * Created by Ankit on 10/10/2016.
@@ -28,8 +28,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public String lostItemSubmissionActivity(@RequestBody Message message){
-        return message.toString();
+    public String lostItemSubmissionActivity(@RequestBody String message){
+        return message;
     }
 
 
