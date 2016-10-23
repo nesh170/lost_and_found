@@ -1,9 +1,7 @@
 package rest;
 
-import data.accessors.DatabaseManager;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sun.plugin2.message.Message;
 
 /**
  * Created by Ankit on 10/10/2016.
@@ -29,9 +27,10 @@ public class MainController {
         return "Login Succeeded with userID: " + userID;
     }
 
-    @RequestMapping("testdb")
-    public String testdb(){
-        DatabaseManager dataAccess = DatabaseManager.getInstance();
-        return dataAccess.toString();
+    @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public String lostItemSubmissionActivity(@RequestBody Message message){
+        return message.toString();
     }
+
+
 }

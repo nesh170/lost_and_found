@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseManager  {
+public class DBManager {
     private static final String userName = "bitnami";
     private static final String password = "password";
     private static final String url = "jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/lost_and_found_db";
@@ -17,16 +17,16 @@ public class DatabaseManager  {
     private DSLContext myDBQuery;
     private Connection myConnection;
 
-    private static DatabaseManager instance = null;
+    private static DBManager instance = null;
 
-    protected DatabaseManager(){
+    protected DBManager(){
         connectDatabase();
         getDBQueryTool();
     }
 
-    public static DatabaseManager getInstance(){
+    public static DBManager getInstance(){
         if(instance==null){
-            instance = new DatabaseManager();
+            instance = new DBManager();
         }
         return instance;
     }
