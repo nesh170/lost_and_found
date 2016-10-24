@@ -1,18 +1,12 @@
 package rest;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import data.LostItem;
 import data.accessors.Accessor;
-import data.accessors.DBManager;
-import org.jooq.tools.json.JSONObject;
-import org.springframework.boot.json.JsonJsonParser;
+import data.accessors.LostItemAccessor;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 
 /**
@@ -42,25 +36,12 @@ public class MainController {
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public String lostItemSubmissionActivity(@RequestBody String message){
         JsonElement lostItemJson = new JsonParser().parse(message);
-        LostItem lostItem = new LostItem(
-                -1,
-                lostItemJson.getAsJsonObject().get("location").getAsString(),
-                new Timestamp(new Date().getTime()),
-                lostItemJson.getAsJsonObject().get("uniqueID").getAsString(),
-                getList(lostItemJson.getAsJsonObject().get("tags").getAsJsonArray().iterator())
-        );
-        Accessor access = new Accessor();
+        LostItem lostItem = new LostItem(lostItemJson);
+        LostItemAccessor access = new LostItemAccessor();
         access.commitLostItemWithTags(lostItem);
         JsonObject response = new JsonObject();
         response.addProperty("status","Success");
         return response.toString();
     }
-
-    private List<String> getList(Iterator<JsonElement> tags) {
-        List<String> list = new ArrayList<>();
-        tags.forEachRemaining(tag -> list.add(tag.getAsString()));
-        return list;
-    }
-
 
 }
