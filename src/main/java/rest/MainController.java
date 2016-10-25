@@ -27,7 +27,7 @@ import java.util.List;
 public class MainController {
     @RequestMapping("/")
     public String hi() {
-        return "Hi this is an endpoint, lol hi Ankit";
+        return "Hi this is an endpoint, lol hi Ankit, lol Shelley was here";
     }
 
     @RequestMapping("/login/{userID}")
