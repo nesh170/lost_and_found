@@ -7,6 +7,7 @@ import data.accessors.DBManager;
 import org.jooq.tools.json.JSONObject;
 import org.springframework.boot.json.JsonJsonParser;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -30,13 +31,53 @@ public class MainController {
         return "Hi this is an endpoint, lol hi Ankit";
     }
 
-    @RequestMapping("/login/{userID}")
-    public String login(@PathVariable String userID) {
+    @RequestMapping(value = "/login/{test}", method = RequestMethod.GET)
+    public ModelAndView login(@PathVariable String test) {
         /*
-        This method will handle the code to check the userID. The user will enter id and password, and this method will query
-        our database to ensure that the user login is indeed valid and the user is a registered user.
+        This method will redirect to OAuth login page
+        */
+        StringBuilder loginURI = new StringBuilder();
+        String oauthURL = "https://oauth.oit.duke.edu/oauth/authorize.php";
+        String[] parameterNames = {"response_type=", "redirect_uri=", "client_id=", "scope=", "state="};
+        String[] parameterVals = {"token", "http://colab-sbx-122.oit.duke.edu:8080/authconfirm", "lost-and-found", "basic", "12345"};
+        String[] parameterValsTest = {"token", "http://localhost:8080/authconfirm", "lost-and-found", "basic", "12345"};
+        if (test.equals("test")) {
+            parameterVals = parameterValsTest;
+        }
+        //loginURI.append("redirect:");
+        loginURI.append(oauthURL);
+        loginURI.append('?');
+        for (int i = 0; i < parameterNames.length; i++) {
+            loginURI.append(parameterNames[i]);
+            loginURI.append(parameterVals[i]);
+            if (i < parameterNames.length-1) {
+                loginURI.append('&');
+            }
+        }
+        //return "hi";
+        return new ModelAndView("redirect:" + loginURI.toString());
+    }
+
+    @RequestMapping("/loginsuccess")
+    public String loginSuccess(@RequestParam String access_token) {
+        /*
+        This method will get the access token and redirect to front end
          */
-        return "Login Succeeded with userID: " + userID;
+        return "Login Succeeded: " + access_token;
+    }
+
+    @RequestMapping(value = "/authconfirm", method = RequestMethod.GET)
+    public ModelAndView authconfirm() {
+        //Redirects to html page which gets authtoken
+        return new ModelAndView("/resources/templates/authconfirm.html");
+    }
+
+    @RequestMapping("/loginfailure")
+    public String loginFailure(@RequestParam String access_token) {
+        /*
+        This method will get the access token and redirect to front end
+         */
+        return "Login Failed: Redirect to the app login page";
     }
 
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
