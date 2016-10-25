@@ -1,12 +1,18 @@
 package rest;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import data.LostItem;
+import data.User;
 import data.accessors.Accessor;
+import data.accessors.AuthAccessor;
 import data.accessors.LostItemAccessor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,7 +36,30 @@ public class MainController {
         This method will handle the code to check the userID. The user will enter id and password, and this method will query
         our database to ensure that the user login is indeed valid and the user is a registered user.
          */
-        return "Login Succeeded with userID: " + userID;
+        AuthAccessor accessor = new AuthAccessor();
+        List<String> allUsers = new ArrayList<>();
+        accessor.getAllUsers().forEach(user -> allUsers.add(user.createJSON().toString()));
+        String allUsersStr = "";
+        for(String k:allUsers){
+            allUsersStr+=k;
+        }
+        User user;
+        try {
+            user = accessor.getUserByUniqueID(userID);
+        }
+        catch(Exception e){
+            return "Login Failed";
+        }
+        return "Login Succeeded with userID: " + user.createJSON().toString() + allUsersStr;
+    }
+
+    @RequestMapping(value = "/lostItems", method = RequestMethod.GET)
+    public String getAllLostItems(){
+        LostItemAccessor access = new LostItemAccessor();
+        List<LostItem> lostItems = access.getAllLostItemsWithTags();
+        JsonArray output = new JsonArray();
+        lostItems.forEach(item -> output.add(item.createJSON()));
+        return output.toString();
     }
 
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")

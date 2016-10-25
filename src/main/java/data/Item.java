@@ -1,6 +1,7 @@
 package data;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -44,4 +45,6 @@ public abstract class Item {
     }
 
     public abstract int getFoundID();
+
+    public abstract JsonObject createJSON();
 }
