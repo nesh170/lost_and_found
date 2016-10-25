@@ -1,11 +1,13 @@
 package data;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class Item {
+public abstract class Item {
 
     public int myID;
     public String myLocation;
@@ -20,6 +22,21 @@ public class Item {
         myUniqueID = uniqueID;
         myTags = tags;
     }
+    
+
+    public Item(JsonElement itemJson) {
+        myID = -1;
+        myLocation = itemJson.getAsJsonObject().get("location").getAsString();
+        myTimestamp = new Timestamp(new Date().getTime());
+        myUniqueID = itemJson.getAsJsonObject().get("uniqueID").getAsString();
+        myTags = getList(itemJson.getAsJsonObject().get("tags").getAsJsonArray().iterator());
+    }
+
+    private List<String> getList(Iterator<JsonElement> tags) {
+        List<String> list = new ArrayList<>();
+        tags.forEachRemaining(tag -> list.add(tag.getAsString()));
+        return list;
+    }
 
     public int tagMatching(List<String> tags){
         Set<String> tagSet = tags.stream().collect(Collectors.toSet());
@@ -27,5 +44,7 @@ public class Item {
         return commonTags.size();
     }
 
+    public abstract int getFoundID();
 
+    public abstract JsonObject createJSON();
 }
