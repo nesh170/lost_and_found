@@ -6,9 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import data.LostItem;
 import data.User;
-import data.accessors.Accessor;
 import data.accessors.AuthAccessor;
-import data.accessors.LostItemAccessor;
+import data.accessors.ItemAccessor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class MainController {
 
     @RequestMapping(value = "/lostItems", method = RequestMethod.GET)
     public String getAllLostItems(){
-        LostItemAccessor access = new LostItemAccessor();
+        ItemAccessor access = new ItemAccessor();
         List<LostItem> lostItems = access.getAllLostItemsWithTags();
         JsonArray output = new JsonArray();
         lostItems.forEach(item -> output.add(item.createJSON()));
@@ -66,7 +65,7 @@ public class MainController {
     public String lostItemSubmissionActivity(@RequestBody String message){
         JsonElement lostItemJson = new JsonParser().parse(message);
         LostItem lostItem = new LostItem(lostItemJson);
-        LostItemAccessor access = new LostItemAccessor();
+        ItemAccessor access = new ItemAccessor();
         access.commitLostItemWithTags(lostItem);
         JsonObject response = new JsonObject();
         response.addProperty("status","Success");
