@@ -13,6 +13,7 @@ public class LostItem extends Item {
 
     public LostItem(Integer id, String geolocation, Timestamp timestamp, String uniqueID, List<String> tags,Integer foundID) {
         super(id,geolocation,timestamp,uniqueID,tags);
+        myFoundID = foundID;
     }
 
     public LostItem(JsonElement lostItemJson) {
