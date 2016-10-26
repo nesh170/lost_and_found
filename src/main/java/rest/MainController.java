@@ -1,20 +1,20 @@
 package rest;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import data.LostItem;
+import data.User;
 import data.accessors.Accessor;
-import data.accessors.DBManager;
-import org.jooq.tools.json.JSONObject;
-import org.springframework.boot.json.JsonJsonParser;
+import data.accessors.AuthAccessor;
+//import data.accessors.LostItemAccessor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -25,7 +25,7 @@ import java.util.List;
  * there will be many more endpoints in our application for the different screens and behaviors users can excpet to access.
  */
 
-@Controller
+@RestController
 public class MainController {
 
     @ResponseBody
@@ -34,8 +34,8 @@ public class MainController {
         return "Hi this is an endpoint, lol hi Ankit";
     }
 
-    @RequestMapping(value = "/login/{test}", method = RequestMethod.GET)
-    public ModelAndView login(@PathVariable String test) {
+    @RequestMapping(value = "/authenticate/{test}", method = RequestMethod.GET)
+    public ModelAndView authenticate(@PathVariable String test) {
         /*
         This method will redirect to OAuth login page
         */
@@ -47,7 +47,6 @@ public class MainController {
         if (test.equals("test")) {
             parameterVals = parameterValsTest;
         }
-        //loginURI.append("redirect:");
         loginURI.append(oauthURL);
         loginURI.append('?');
         for (int i = 0; i < parameterNames.length; i++) {
@@ -86,28 +85,45 @@ public class MainController {
     }
 
     @ResponseBody
+    @RequestMapping("/login/{userID}")
+    public String login(@PathVariable String userID) {
+        AuthAccessor accessor = new AuthAccessor();
+        List<String> allUsers = new ArrayList<>();
+        accessor.getAllUsers().forEach(user -> allUsers.add(user.createJSON().toString()));
+        String allUsersStr = "";
+        for(String k:allUsers){
+            allUsersStr+=k;
+        }
+        User user;
+        try {
+            user = accessor.getUserByUniqueID(userID);
+        }
+        catch(Exception e){
+            return "Login Failed";
+        }
+        return "Login Succeeded with userID: " + user.createJSON().toString() + allUsersStr;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/lostItems", method = RequestMethod.GET)
+    public String getAllLostItems(){
+        LostItemAccessor access = new LostItemAccessor();
+        List<LostItem> lostItems = access.getAllLostItemsWithTags();
+        JsonArray output = new JsonArray();
+        lostItems.forEach(item -> output.add(item.createJSON()));
+        return output.toString();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public String lostItemSubmissionActivity(@RequestBody String message){
         JsonElement lostItemJson = new JsonParser().parse(message);
-        LostItem lostItem = new LostItem(
-                -1,
-                lostItemJson.getAsJsonObject().get("location").getAsString(),
-                new Timestamp(new Date().getTime()),
-                lostItemJson.getAsJsonObject().get("uniqueID").getAsString(),
-                getList(lostItemJson.getAsJsonObject().get("tags").getAsJsonArray().iterator())
-        );
-        Accessor access = new Accessor();
+        LostItem lostItem = new LostItem(lostItemJson);
+        LostItemAccessor access = new LostItemAccessor();
         access.commitLostItemWithTags(lostItem);
         JsonObject response = new JsonObject();
         response.addProperty("status","Success");
         return response.toString();
     }
-
-    private List<String> getList(Iterator<JsonElement> tags) {
-        List<String> list = new ArrayList<>();
-        tags.forEachRemaining(tag -> list.add(tag.getAsString()));
-        return list;
-    }
-
 
 }
