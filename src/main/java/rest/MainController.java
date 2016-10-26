@@ -8,6 +8,8 @@ import org.jooq.tools.json.JSONObject;
 import org.springframework.boot.json.JsonJsonParser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,9 +25,10 @@ import java.util.List;
  * there will be many more endpoints in our application for the different screens and behaviors users can excpet to access.
  */
 
-
-@RestController
+@Controller
 public class MainController {
+
+    @ResponseBody
     @RequestMapping("/")
     public String hi() {
         return "Hi this is an endpoint, lol hi Ankit";
@@ -58,6 +61,7 @@ public class MainController {
         return new ModelAndView("redirect:" + loginURI.toString());
     }
 
+    @ResponseBody
     @RequestMapping("/loginsuccess")
     public String loginSuccess(@RequestParam String access_token) {
         /*
@@ -66,12 +70,13 @@ public class MainController {
         return "Login Succeeded: " + access_token;
     }
 
-    @RequestMapping(value = "/authconfirm", method = RequestMethod.GET)
-    public ModelAndView authconfirm() {
-        //Redirects to html page which gets authtoken
-        return new ModelAndView("/resources/templates/authconfirm.html");
+    @RequestMapping("/authconfirm")
+    public String authconfirm(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "authconfirm";
     }
 
+    @ResponseBody
     @RequestMapping("/loginfailure")
     public String loginFailure(@RequestParam String access_token) {
         /*
@@ -80,6 +85,7 @@ public class MainController {
         return "Login Failed: Redirect to the app login page";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public String lostItemSubmissionActivity(@RequestBody String message){
         JsonElement lostItemJson = new JsonParser().parse(message);

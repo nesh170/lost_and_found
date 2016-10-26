@@ -13,6 +13,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply plugin: 'idea'
 
 springBoot {
     executable = true
@@ -33,11 +34,15 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.jooq', name: 'jooq', version: '3.4.5'
     compile("org.jooq:jooq-meta:3.4.5")
     compile group: 'org.jooq', name: 'jooq-codegen', version: '3.4.5'
     compile group: 'org.postgresql', name: 'postgresql', version: '9.3-1101-jdbc41'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+//    compile("org.springframework.boot:spring-boot-starter-security")
+//    compile("org.springframework.security.oauth:spring-security-oauth2")
 }
 
 buildscript {
@@ -47,8 +52,6 @@ buildscript {
     dependencies {
         classpath 'nu.studer:gradle-jooq-plugin:1.0.5'
         classpath 'postgresql:postgresql:9.1-901.jdbc4' // database-specific JDBC driver
-        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-        compile("org.springframework.boot:spring-boot-devtools")
     }
 }
 apply plugin: 'nu.studer.jooq'
