@@ -1,5 +1,6 @@
 package data;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -44,7 +45,17 @@ public abstract class Item {
         return commonTags.size();
     }
 
-    public abstract int getFoundID();
+    public abstract int getMatchedID();
 
-    public abstract JsonObject createJSON();
+    public JsonObject createJSON() {
+        JsonObject lostItemJSON = new JsonObject();
+        lostItemJSON.addProperty("id",myID);
+        lostItemJSON.addProperty("location",myLocation);
+        lostItemJSON.addProperty("uniqueID",myUniqueID);
+        lostItemJSON.addProperty("timestamp",myTimestamp.toString());
+        JsonArray tagArrayJSON = new JsonArray();
+        myTags.forEach(tagArrayJSON::add);
+        lostItemJSON.addProperty("tags",tagArrayJSON.toString());
+        return lostItemJSON;
+    }
 }
