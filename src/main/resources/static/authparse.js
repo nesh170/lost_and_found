@@ -1,4 +1,4 @@
-var url = window.location;
+var url = window.location.href;
 var redirectString = "http://localhost:8080/loginsuccess";
 if (!window.location.hash) {
     if (url.indexOf("localhost") != -1) {
@@ -15,6 +15,9 @@ if (!window.location.hash) {
         if (parameters[i].indexOf("access_token") != -1) {
             accesstokenParam = parameters[i];
         }
+    }
+    if (url.indexOf("colab") > -1) {
+        redirectString = "http://colab-sbx-122.oit.duke.edu:8080/loginsuccess";
     }
     redirectString = redirectString.concat("?");
     redirectString = redirectString.concat(accesstokenParam);
