@@ -41,8 +41,8 @@ public class MainController {
         StringBuilder loginURI = new StringBuilder();
         String oauthURL = "https://oauth.oit.duke.edu/oauth/authorize.php";
         String[] parameterNames = {"response_type=", "redirect_uri=", "client_id=", "scope=", "state="};
-        String[] parameterVals = {"token", "http://colab-sbx-122.oit.duke.edu:8080/authconfirm", "lost-and-found", "basic", "12345"};
-        String[] parameterValsTest = {"token", "http://localhost:8080/authconfirm", "lost-and-found", "basic", "12345"};
+        String[] parameterVals = {"token", "http://colab-sbx-122.oit.duke.edu:8080/authconfirm", "lost-and-found", "identity:netid:read", "12345"};
+        String[] parameterValsTest = {"token", "http://localhost:8080/authconfirm", "lost-and-found", "identity:netid:read", "12345"};
         if (test.equals("test")) {
             parameterVals = parameterValsTest;
         }
@@ -55,7 +55,6 @@ public class MainController {
                 loginURI.append('&');
             }
         }
-        //return "hi";
         return new ModelAndView("redirect:" + loginURI.toString());
     }
 
