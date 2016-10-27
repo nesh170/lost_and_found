@@ -8,7 +8,7 @@ import data.LostItem;
 import data.User;
 import data.accessors.Accessor;
 import data.accessors.AuthAccessor;
-//import data.accessors.LostItemAccessor;
+import data.accessors.LostItemAccessor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ import java.util.List;
  * there will be many more endpoints in our application for the different screens and behaviors users can excpet to access.
  */
 
-@RestController
+@Controller
 public class MainController {
 
     @ResponseBody
