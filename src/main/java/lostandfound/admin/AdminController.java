@@ -14,7 +14,7 @@ public class AdminController extends Controller {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/dbUpgrade", method = RequestMethod.GET)
+    @RequestMapping(value = "/dbUpgrade/{sqlFileName}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity dbUpgrade(@PathVariable String sqlFileName) throws IOException {
         return wrap(adminService.upgradeDb(sqlFileName));

@@ -14,7 +14,7 @@ public class AdminService extends Service {
 
     public StdResponse upgradeDb(String sqlFileName) {
         try {
-            String query = readQuery("sql/" + sqlFileName);
+            String query = readQuery("sql/" + sqlFileName + ".sql");
             jt.execute(query);
 
             return new StdResponse(200, true, "Successfully upgraded database");
