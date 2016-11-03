@@ -18,20 +18,20 @@ public class AuthAccessor extends Accessor {
     public List<User> getAllUsers(){
         Result<Record> userRecord = myContext.select().from(AUTH_TABLE).fetch();
         List<User> userList = new ArrayList<>();
-        userRecord.forEach(record -> userList.add(new User(record.getValue(AUTH_TABLE.NAME),record.getValue(AUTH_TABLE.UNIQUE_ID),record.getValue(AUTH_TABLE.NET_ID))));
+        userRecord.forEach(record -> userList.add(new User(record.getValue(AUTH_TABLE.GIVEN_NAME),record.getValue(AUTH_TABLE.UNIQUE_ID),record.getValue(AUTH_TABLE.NET_ID))));
         return userList;
     }
 
     public User getUserByUniqueID(String uniqueID){
         Record record = myContext.select().from(AUTH_TABLE).where(AUTH_TABLE.UNIQUE_ID.equal(uniqueID)).fetchOne();
         if(record==null) throw new NullPointerException();
-        User user = new User(record.getValue(AUTH_TABLE.NAME),record.getValue(AUTH_TABLE.UNIQUE_ID),record.getValue(AUTH_TABLE.NET_ID));
+        User user = new User(record.getValue(AUTH_TABLE.GIVEN_NAME),record.getValue(AUTH_TABLE.UNIQUE_ID),record.getValue(AUTH_TABLE.NET_ID));
         return user;
     }
 
     public int createUser(User user){
         return myContext
-                .insertInto(AUTH_TABLE,AUTH_TABLE.UNIQUE_ID,AUTH_TABLE.NAME,AUTH_TABLE.NET_ID)
+                .insertInto(AUTH_TABLE,AUTH_TABLE.UNIQUE_ID,AUTH_TABLE.GIVEN_NAME,AUTH_TABLE.NET_ID)
                 .values(user.myUniqueID,user.myName,user.myNetID).execute();
     }
 }
