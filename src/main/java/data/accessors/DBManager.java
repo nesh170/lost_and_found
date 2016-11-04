@@ -4,18 +4,17 @@ package data.accessors;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import utilities.PropertiesLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBManager {
-    private static final String userName = "bitnami";
-    private static final String password = "password";
-    private static final String url = "jdbc:postgresql://colab-sbx-122.oit.duke.edu:5432/lost_and_found_db";
 
-    private DSLContext myDBQuery;
-    private Connection myConnection;
+    private DSLContext dbQuery;
+    private Connection connection;
 
     private static DBManager instance = null;
 
@@ -31,19 +30,24 @@ public class DBManager {
         return instance;
     }
 
-    private void connectDatabase(){
+    private void connectDatabase() {
+        Properties properties = PropertiesLoader.loadPropertiesFromPackage("application.properties");
         try {
-            myConnection = DriverManager.getConnection(url,userName,password);
+            connection = DriverManager.getConnection(
+                    properties.getProperty("spring.datasource.url"),
+                    properties.getProperty("spring.datasource.username"),
+                    properties.getProperty("spring.datasource.password")
+            );
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public DSLContext getDBQueryTool(){
-        if(myDBQuery == null) {
-            myDBQuery = DSL.using(myConnection, SQLDialect.POSTGRES);
+        if(dbQuery == null) {
+            dbQuery = DSL.using(connection, SQLDialect.POSTGRES);
         }
-        return myDBQuery;
+        return dbQuery;
     }
 
 

@@ -27,12 +27,6 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @ResponseBody
-    @RequestMapping("/")
-    public String hi() {
-        return "Hi this is an endpoint, lol hi Ankit";
-    }
-
     @RequestMapping(value = "/authenticate/{test}", method = RequestMethod.GET)
     public ModelAndView authenticate(@PathVariable String test) {
         /*
@@ -100,28 +94,6 @@ public class MainController {
             return "Login Failed";
         }
         return "Login Succeeded with userID: " + user.createJSON().toString() + allUsersStr;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/lostItems", method = RequestMethod.GET)
-    public String getAllLostItems(){
-        ItemAccessor access = new ItemAccessor();
-        List<LostItem> lostItems = access.getAllLostItemsWithTags();
-        JsonArray output = new JsonArray();
-        lostItems.forEach(item -> output.add(item.createJSON()));
-        return output.toString();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/lostItemSubmission", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public String lostItemSubmissionActivity(@RequestBody String message){
-        JsonElement lostItemJson = new JsonParser().parse(message);
-        LostItem lostItem = new LostItem(lostItemJson);
-        ItemAccessor access = new ItemAccessor();
-        access.commitLostItemWithTags(lostItem);
-        JsonObject response = new JsonObject();
-        response.addProperty("status","Success");
-        return response.toString();
     }
 
 }
