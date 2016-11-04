@@ -46,11 +46,9 @@ public class ItemAccessor extends Accessor {
     }
 
     public int commitLostItemWithTags(Item lostItem){
-        Integer matchID = (lostItem.getMatchedID()==-1) ? null: lostItem.getMatchedID();
-        System.out.println(matchID + "       " + lostItem.getMatchedID() + "  MATCHEDIS");
         LostItemsRecord outputLostItem =  myContext.insertInto(LOST_ITEMS,
-                LOST_ITEMS.GEOLOCATION,LOST_ITEMS.TIME_STAMP,LOST_ITEMS.USER_UNIQUE_ID,LOST_ITEMS.FOUND_ID)
-                .values(lostItem.myLocation,lostItem.myTimestamp,lostItem.myUniqueID,matchID).returning(LOST_ITEMS.ID).fetchOne();
+                LOST_ITEMS.GEOLOCATION,LOST_ITEMS.TIME_STAMP,LOST_ITEMS.USER_UNIQUE_ID)
+                .values(lostItem.myLocation,lostItem.myTimestamp,lostItem.myUniqueID).returning(LOST_ITEMS.ID).fetchOne();
         lostItem.myID = outputLostItem.value1();
         lostItem.myTags.forEach(tag -> myContext.insertInto(LOST_TAGS,LOST_TAGS.ID,LOST_TAGS.TAGS).values(lostItem.myID, tag).execute());
         return lostItem.myID;
@@ -73,10 +71,9 @@ public class ItemAccessor extends Accessor {
     }
 
     public int commitFoundItemWithTags(Item foundItem){
-        Integer matchID = (foundItem.getMatchedID()==-1) ? null: foundItem.getMatchedID();
         FoundItemsRecord outputFoundItem =  myContext.insertInto(FOUND_ITEMS,
-                FOUND_ITEMS.GEOLOCATION,FOUND_ITEMS.TIME_STAMP,FOUND_ITEMS.USER_UNIQUE_ID,FOUND_ITEMS.LOST_ID)
-                .values(foundItem.myLocation,foundItem.myTimestamp,foundItem.myUniqueID,matchID).returning(FOUND_ITEMS.ID).fetchOne();
+                FOUND_ITEMS.GEOLOCATION,FOUND_ITEMS.TIME_STAMP,FOUND_ITEMS.USER_UNIQUE_ID)
+                .values(foundItem.myLocation,foundItem.myTimestamp,foundItem.myUniqueID).returning(FOUND_ITEMS.ID).fetchOne();
         foundItem.myID = outputFoundItem.value1();
         foundItem.myTags.forEach(tag -> myContext.insertInto(FOUND_TAGS,FOUND_TAGS.ID,FOUND_TAGS.TAGS).values(foundItem.myID, tag).execute());
         return foundItem.myID;
