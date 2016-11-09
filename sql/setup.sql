@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS lost_items(
   geolocation VARCHAR(100) NOT NULL,
   user_unique_id VARCHAR(7) NOT NULL,
   found_id INTEGER,
-  picture_url VARCHAR(2000),
+  picture_url VARCHAR(2000) UNIQUE,
   CONSTRAINT PK_lost_items PRIMARY KEY (id) ,
   CONSTRAINT FK_lost_items_user_unique_id FOREIGN KEY (user_unique_id) REFERENCES auth_table(unique_id)
 );
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS found_items(
   geolocation VARCHAR(100) NOT NULL,
   user_unique_id VARCHAR(7) REFERENCES auth_table(unique_id) ,
   lost_id INTEGER,
-  picture_url VARCHAR(2000),
+  picture_url VARCHAR(2000) UNIQUE,
   CONSTRAINT PK_found_items PRIMARY KEY (id) ,
   CONSTRAINT FK_found_items_user_unique_id FOREIGN KEY (user_unique_id) REFERENCES auth_table(unique_id)
 );
