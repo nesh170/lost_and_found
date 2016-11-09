@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS auth_table(
   unique_id  VARCHAR(7) ,
   given_name VARCHAR(50) NOT NULL ,
   net_id     VARCHAR(10) NOT NULL UNIQUE,
+  email      VARCHAR(256) NOT NULL UNIQUE,
   CONSTRAINT PK_auth_table PRIMARY KEY (unique_id)
 );
 
@@ -15,7 +16,8 @@ CREATE TABLE IF NOT EXISTS lost_items(
   time_stamp TIMESTAMP NOT NULL,
   geolocation VARCHAR(100) NOT NULL,
   user_unique_id VARCHAR(7) NOT NULL,
-  found_id INTEGER ,
+  found_id INTEGER,
+  picture_url VARCHAR(2000),
   CONSTRAINT PK_lost_items PRIMARY KEY (id) ,
   CONSTRAINT FK_lost_items_user_unique_id FOREIGN KEY (user_unique_id) REFERENCES auth_table(unique_id)
 );
@@ -33,7 +35,8 @@ CREATE TABLE IF NOT EXISTS found_items(
   time_stamp TIMESTAMP NOT NULL,
   geolocation VARCHAR(100) NOT NULL,
   user_unique_id VARCHAR(7) REFERENCES auth_table(unique_id) ,
-  lost_id INTEGER ,
+  lost_id INTEGER,
+  picture_url VARCHAR(2000),
   CONSTRAINT PK_found_items PRIMARY KEY (id) ,
   CONSTRAINT FK_found_items_user_unique_id FOREIGN KEY (user_unique_id) REFERENCES auth_table(unique_id)
 );
