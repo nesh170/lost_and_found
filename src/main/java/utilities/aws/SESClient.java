@@ -5,6 +5,8 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.*;
 import com.amazonaws.services.simpleemail.model.*;
 
+import java.util.List;
+
 public class SESClient extends AWSClient {
     private AmazonSimpleEmailServiceClient client;
     private static final String FROM = property.getProperty("source.email");
@@ -19,20 +21,18 @@ public class SESClient extends AWSClient {
         VerifyEmailIdentityRequest identityRequest = new VerifyEmailIdentityRequest();
         this.client.verifyEmailIdentity(identityRequest.withEmailAddress(emailAddress));
     }
-    public boolean sendEmail(String[] toAddresses, String subjectLine, String emailMessage) {
+    public void sendEmail(List<String> toAddresses, String subjectLine, String emailMessage) throws Exception {
         Destination destination = new Destination().withToAddresses(toAddresses);
         Content subject = new Content().withData(subjectLine);
         Content content = new Content().withData(emailMessage);
         Body body = new Body().withText(content);
         Message message = new Message().withSubject(subject).withBody(body);
         SendEmailRequest request = new SendEmailRequest().withSource(this.FROM).withDestination(destination).withMessage(message);
-        try {
-            this.client.sendEmail(request);
-            return true;
+        try{
+            client.sendEmail(request);
         }
-        catch (Exception e) {
-            System.out.println("Attempt to send email did not work");
-            return false;
+        catch (Exception exception) {
+            throw new Exception("Email could not be sent");
         }
     }
 }
