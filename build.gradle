@@ -17,6 +17,29 @@ apply plugin: 'idea'
 apply plugin: 'application'
 mainClassName = 'lostandfound.Application'
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE"
+    }
+}
+
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.53'
+    }
+}
+
+dependencies {
+    compile 'com.amazonaws:aws-java-sdk-s3'
+    compile 'com.amazonaws:aws-java-sdk-ses'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
 springBoot {
     executable = true
 }
@@ -33,6 +56,7 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
+
 
 dependencies {
     // tag::jetty[]
@@ -64,6 +88,9 @@ dependencies {
 
     // gson
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+    //aws
+
 }
 
 buildscript {

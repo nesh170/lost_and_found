@@ -58,5 +58,5 @@ fabric.properties
 
 #sensitive files
 gradle.properties
-/src/main/resources/security.properties
+/src/main/resources/aws.properties
 /src/main/resources/application.properties
