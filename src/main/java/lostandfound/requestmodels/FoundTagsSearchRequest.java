@@ -2,8 +2,7 @@ package lostandfound.requestmodels;
 
 import java.util.List;
 
-public class SearchRequest {
-
+public class FoundTagsSearchRequest {
     public List<String> tags;
 
 }

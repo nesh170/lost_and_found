@@ -1,24 +1,16 @@
 package data;
 
-import com.google.gson.JsonObject;
-
 public class User {
-    public String myName;
-    public String myUniqueID;
-    public String myNetID;
+    public String name;
+    public String uniqueId;
+    public String netId;
+    public String email;
 
-    public User(String name, String uniqueID, String netID){
-        myName = name;
-        myUniqueID = uniqueID;
-        myNetID = netID;
-    }
-
-    public JsonObject createJSON(){
-        JsonObject userJSON = new JsonObject();
-        userJSON.addProperty("name",myName);
-        userJSON.addProperty("uniqueID",myUniqueID);
-        userJSON.addProperty("netID",myNetID);
-        return userJSON;
+    public User(String name, String uniqueId, String netId, String email){
+        this.name = name;
+        this.uniqueId = uniqueId;
+        this.netId = netId;
+        this.email = email;
     }
 
 }

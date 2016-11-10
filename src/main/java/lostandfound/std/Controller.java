@@ -1,5 +1,7 @@
 package lostandfound.std;
 
+import lostandfound.exceptions.AuthException;
+import lostandfound.std.models.StdRequest;
 import lostandfound.std.models.StdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +31,12 @@ public class Controller {
                 return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(stdResponse);
         }
     }
+
+    protected void pre(StdRequest request) {
+        if (!service.authorizeUser(request.uniqueId, request.accessToken)) {
+            throw new AuthException(request.accessToken + " " + "is not authorized to access");
+        }
+    }
+
 
 }

@@ -76,24 +76,4 @@ public class MainController {
         return "Login Failed: Redirect to the app login page";
     }
 
-    @ResponseBody
-    @RequestMapping("/login/{userID}")
-    public String login(@PathVariable String userID) {
-        AuthAccessor accessor = new AuthAccessor();
-        List<String> allUsers = new ArrayList<>();
-        accessor.getAllUsers().forEach(user -> allUsers.add(user.createJSON().toString()));
-        String allUsersStr = "";
-        for(String k:allUsers){
-            allUsersStr+=k;
-        }
-        User user;
-        try {
-            user = accessor.getUserByUniqueID(userID);
-        }
-        catch(Exception e){
-            return "Login Failed";
-        }
-        return "Login Succeeded with userID: " + user.createJSON().toString() + allUsersStr;
-    }
-
 }

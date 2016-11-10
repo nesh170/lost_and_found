@@ -2,13 +2,11 @@ package lostandfound.lostitem;
 
 import data.FoundItem;
 import data.LostItem;
-import data.accessors.ItemAccessor;
 import lostandfound.requestmodels.LostItemRequest;
 import lostandfound.std.Service;
 import lostandfound.std.models.StdResponse;
 import lostandfound.std.models.StdResponseWithBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +22,11 @@ public class LostItemService extends Service {
     }
 
     public StdResponse createLostItem(LostItemRequest lostItemRequest){
-        LostItem lostItem = new LostItem(-1,lostItemRequest.geolocation,lostItemRequest.timestamp,lostItemRequest.uniqueId,lostItemRequest.tags,-1);
-        Integer id = itemAccessor.commitLostItemWithTags(lostItem);
+        LostItem lostItem = new LostItem(lostItemRequest.geolocation,lostItemRequest.timestamp,lostItemRequest.uniqueId,lostItemRequest.tags);
+        lostItem.id = itemAccessor.commitLostItemWithTags(lostItem);
         Map<Integer,List<FoundItem>> matchedFoundItem = new HashMap<>();
         itemAccessor.getAllFoundItemsWithTags().forEach(item -> {
-            int matchTags = item.tagMatching(lostItem.myTags);
+            int matchTags = item.tagMatching(lostItem.tags);
             if (matchedFoundItem.containsKey(matchTags)) {
                 matchedFoundItem.get(matchTags).add(item);
             }

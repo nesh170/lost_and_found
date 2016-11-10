@@ -30,6 +30,7 @@
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpasyncclient:4.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20140107" level="project" />
+    <orderEntry type="library" name="Gradle: org.thymeleaf:thymeleaf:2.0.5" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-kms:1.10.53" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-core:1.10.53" level="project" />
@@ -64,6 +65,9 @@
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore:4.4.5" level="project" />
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.3.2" level="project" />
+    <orderEntry type="library" name="Gradle: ognl:ognl:3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.javassist:javassist:3.20.0-GA" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.4" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.4.1.RELEASE" level="project" />
@@ -88,7 +92,6 @@
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.11.v20160721" level="project" />
     <orderEntry type="library" name="Gradle: javax.websocket:javax.websocket-api:1.0" level="project" />
     <orderEntry type="library" name="Gradle: net.minidev:json-smart:2.2.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-tx:4.3.3.RELEASE" level="project" />

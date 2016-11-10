@@ -40,7 +40,7 @@ public class ItemAccessor extends Accessor {
                     new LostItem(
                             result.getValue(LOST_ITEMS.ID), result.getValue(LOST_ITEMS.GEOLOCATION),
                             result.getValue(LOST_ITEMS.TIME_STAMP), result.getValue(LOST_ITEMS.USER_UNIQUE_ID),
-                            lostTags.get(result.getValue(LOST_ITEMS.ID)),-1));
+                            lostTags.get(result.getValue(LOST_ITEMS.ID)),result.getValue(LOST_ITEMS.PICTURE_URL),-1));
         });
         return lostItemsList;
     }
@@ -48,10 +48,10 @@ public class ItemAccessor extends Accessor {
     public int commitLostItemWithTags(Item lostItem){
         LostItemsRecord outputLostItem =  myContext.insertInto(LOST_ITEMS,
                 LOST_ITEMS.GEOLOCATION,LOST_ITEMS.TIME_STAMP,LOST_ITEMS.USER_UNIQUE_ID)
-                .values(lostItem.myLocation,lostItem.myTimestamp,lostItem.myUniqueID).returning(LOST_ITEMS.ID).fetchOne();
-        lostItem.myID = outputLostItem.value1();
-        lostItem.myTags.forEach(tag -> myContext.insertInto(LOST_TAGS,LOST_TAGS.ID,LOST_TAGS.TAGS).values(lostItem.myID, tag).execute());
-        return lostItem.myID;
+                .values(lostItem.location,lostItem.timestamp,lostItem.uniqueId).returning(LOST_ITEMS.ID).fetchOne();
+        lostItem.id = outputLostItem.value1();
+        lostItem.tags.forEach(tag -> myContext.insertInto(LOST_TAGS,LOST_TAGS.ID,LOST_TAGS.TAGS).values(lostItem.id, tag).execute());
+        return lostItem.id;
     }
 
     public List<FoundItem> getAllFoundItemsWithTags(){
@@ -65,7 +65,7 @@ public class ItemAccessor extends Accessor {
                     new FoundItem(
                             result.getValue(FOUND_ITEMS.ID), result.getValue(FOUND_ITEMS.GEOLOCATION),
                             result.getValue(FOUND_ITEMS.TIME_STAMP), result.getValue(FOUND_ITEMS.USER_UNIQUE_ID),
-                            foundTags.get(result.getValue(FOUND_ITEMS.ID)),-1));
+                            foundTags.get(result.getValue(FOUND_ITEMS.ID)),result.getValue(FOUND_ITEMS.PICTURE_URL),-1));
         });
         return foundItemsList;
     }
@@ -73,10 +73,15 @@ public class ItemAccessor extends Accessor {
     public int commitFoundItemWithTags(Item foundItem){
         FoundItemsRecord outputFoundItem =  myContext.insertInto(FOUND_ITEMS,
                 FOUND_ITEMS.GEOLOCATION,FOUND_ITEMS.TIME_STAMP,FOUND_ITEMS.USER_UNIQUE_ID)
-                .values(foundItem.myLocation,foundItem.myTimestamp,foundItem.myUniqueID).returning(FOUND_ITEMS.ID).fetchOne();
-        foundItem.myID = outputFoundItem.value1();
-        foundItem.myTags.forEach(tag -> myContext.insertInto(FOUND_TAGS,FOUND_TAGS.ID,FOUND_TAGS.TAGS).values(foundItem.myID, tag).execute());
-        return foundItem.myID;
+                .values(foundItem.location,foundItem.timestamp,foundItem.uniqueId).returning(FOUND_ITEMS.ID).fetchOne();
+        foundItem.id = outputFoundItem.value1();
+        foundItem.tags.forEach(tag -> myContext.insertInto(FOUND_TAGS,FOUND_TAGS.ID,FOUND_TAGS.TAGS).values(foundItem.id, tag).execute());
+        return foundItem.id;
+    }
+
+    public void markItemAsFound(int foundId, int lostId){
+        myContext.update(LOST_ITEMS).set(LOST_ITEMS.FOUND_ID,foundId).execute();
+        myContext.update(FOUND_ITEMS).set(FOUND_ITEMS.LOST_ID,lostId).execute();
     }
 
 }

@@ -1,28 +1,23 @@
 package data;
 
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import java.sql.Timestamp;
 import java.util.List;
 
 public class LostItem extends Item {
-    private int myFoundID = -1;
+    private int foundId = -1;
 
-    public LostItem(Integer id, String geolocation, Timestamp timestamp, String uniqueID, List<String> tags,Integer foundID) {
-        super(id,geolocation,timestamp,uniqueID,tags);
-        myFoundID = foundID;
+    public LostItem(Integer id, String geolocation, Timestamp timestamp, String uniqueID, List<String> tags, String pictureURL, Integer foundId) {
+        super(id,geolocation,timestamp,uniqueID,tags,pictureURL);
+        this.foundId = foundId;
     }
 
-    public LostItem(JsonElement lostItemJson) {
-        super(lostItemJson);
+    public LostItem(String geolocation, Timestamp timestamp, String uniqueID, List<String> tags){
+        super(geolocation,timestamp,uniqueID,tags);
     }
 
     @Override
     public int getMatchedID() {
-        return myFoundID;
+        return foundId;
     }
 
 }
