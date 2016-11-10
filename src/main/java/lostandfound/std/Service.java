@@ -5,6 +5,7 @@ import data.accessors.ItemAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utilities.PropertiesLoader;
+import utilities.ThymeleafEmailClient;
 import utilities.aws.S3Client;
 import utilities.aws.SESClient;
 
@@ -17,6 +18,7 @@ public class Service {
     public final ItemAccessor itemAccessor = new ItemAccessor();
     public final S3Client s3Client = new S3Client();
     public final SESClient sesClient = new SESClient();
+    public final ThymeleafEmailClient emailTemplateClient = new ThymeleafEmailClient();
 
     public final Properties generalProperties = PropertiesLoader.loadPropertiesFromPackage("general.properties");
 
