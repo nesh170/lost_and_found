@@ -4,6 +4,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.*;
 import com.amazonaws.services.simpleemail.model.*;
+import lostandfound.exceptions.EmailException;
 
 import java.util.List;
 
@@ -25,14 +26,14 @@ public class SESClient extends AWSClient {
         Destination destination = new Destination().withToAddresses(toAddresses);
         Content subject = new Content().withData(subjectLine);
         Content content = new Content().withData(emailMessage);
-        Body body = new Body().withText(content);
+        Body body = new Body().withHtml(content);
         Message message = new Message().withSubject(subject).withBody(body);
         SendEmailRequest request = new SendEmailRequest().withSource(this.FROM).withDestination(destination).withMessage(message);
         try{
             client.sendEmail(request);
         }
         catch (Exception exception) {
-            throw new Exception("Email could not be sent");
+            throw new EmailException("Email could not be sent");
         }
     }
 }

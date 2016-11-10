@@ -1,61 +1,42 @@
 package data;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class Item {
 
-    public int myID;
-    public String myLocation;
-    public Timestamp myTimestamp;
-    public String myUniqueID;
-    public List<String> myTags;
+    public int id = -1;
+    public String location;
+    public Timestamp timestamp;
+    public String uniqueId;
+    public List<String> tags;
+    public String pictureURL;
 
-    public Item(Integer id, String geolocation, Timestamp timestamp, String uniqueID, List<String> tags){
-        myID = id;
-        myLocation = geolocation;
-        myTimestamp = timestamp;
-        myUniqueID = uniqueID;
-        myTags = tags;
-    }
-    
-
-    public Item(JsonElement itemJson) {
-        myID = -1;
-        myLocation = itemJson.getAsJsonObject().get("location").getAsString();
-        myTimestamp = new Timestamp(new Date().getTime());
-        myUniqueID = itemJson.getAsJsonObject().get("uniqueID").getAsString();
-        myTags = getList(itemJson.getAsJsonObject().get("tags").getAsJsonArray().iterator());
+    public Item(String location, Timestamp timestamp, String uniqueId, List<String> tags){
+        this.location = location;
+        this.timestamp = timestamp;
+        this.uniqueId = uniqueId;
+        this.tags = tags;
     }
 
-    private List<String> getList(Iterator<JsonElement> tags) {
-        List<String> list = new ArrayList<>();
-        tags.forEachRemaining(tag -> list.add(tag.getAsString()));
-        return list;
+    public Item(Integer id, String location, Timestamp timestamp, String uniqueId, List<String> tags, String pictureURL){
+        this(location,timestamp,uniqueId,tags);
+        this.id = id;
+        this.pictureURL = pictureURL;
     }
 
     public int tagMatching(List<String> tags){
         Set<String> tagSet = tags.stream().collect(Collectors.toSet());
-        List<String> commonTags = myTags.stream().filter(tagSet::contains).collect(Collectors.toList());
+        List<String> commonTags = this.tags.stream().filter(tagSet::contains).collect(Collectors.toList());
         return commonTags.size();
     }
 
     public abstract int getMatchedID();
 
-    public JsonObject createJSON() {
-        JsonObject lostItemJSON = new JsonObject();
-        lostItemJSON.addProperty("id",myID);
-        lostItemJSON.addProperty("location",myLocation);
-        lostItemJSON.addProperty("uniqueID",myUniqueID);
-        lostItemJSON.addProperty("timestamp",myTimestamp.toString());
-        JsonArray tagArrayJSON = new JsonArray();
-        myTags.forEach(tagArrayJSON::add);
-        lostItemJSON.addProperty("tags",tagArrayJSON.toString());
-        return lostItemJSON;
-    }
 }

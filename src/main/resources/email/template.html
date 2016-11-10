@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<p th:text="#{greeting(${name})}">
+    Hello, Name in here.
+</p>
+
+<p>
+    Did you lose this? Contact
+    <a th:href="${#dates.format(subscriptionDate)}"><span th:text="${#dates.format(subscriptionDate)}">Person who found</span></a> if it is yours
+
+</p>
+
+<p>
+    <img src="../../webapp/images/thymeleaf-banner.png" th:src="'cid:' + ${imageResourceName}" />
+</p>
+<p>
+    Regards, <br />
+    &emsp; <em>Lost and Found Spring Finderz</em>
+</p>
+</body>
+</html>
