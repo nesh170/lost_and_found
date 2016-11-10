@@ -34,7 +34,7 @@ public class Controller {
 
     protected void pre(StdRequest request) {
         if (!service.authorizeUser(request.uniqueId, request.accessToken)) {
-            throw new AuthException(request.accessToken + " " + "is not authorized to access");
+            throw new AuthException("UNIQUEID: " + request.uniqueId + " ACCESS TOKEN:" + request.accessToken + " " + "is not authorized to access");
         }
     }
 
