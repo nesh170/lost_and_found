@@ -24,7 +24,6 @@ public class DukeCardService extends Service {
         try {
             sesClient.sendEmail(Stream.of(loster.email).collect(Collectors.toList()), DUKECARD_SUBJECT_LINE, emailMessage);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new EmailException(loster.email + "cannot be send");
         }
         return new StdResponse(200,true,"Successfully Send");
