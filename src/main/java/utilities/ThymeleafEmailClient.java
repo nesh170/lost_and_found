@@ -28,7 +28,7 @@ public class ThymeleafEmailClient {
         return templateResolver;
     }
 
-    public String createEmail(String recipientName, String foundEmailAddress, String foundPerson, String imageResourceName, Locale locale) {
+    public String createEmail(String recipientName, String foundEmailAddress, String foundPerson, String imageResourceName, String template, Locale locale) {
         // Prepare the evaluation context
         final Context ctx = new Context(locale);
         ctx.setVariable("lostName", recipientName);
@@ -39,7 +39,7 @@ public class ThymeleafEmailClient {
         //TODO remove the cid for emails :/
 
         // Create the HTML body using Thymeleaf
-        final String htmlContent = this.templateEngine.process("email_template", ctx);
+        final String htmlContent = this.templateEngine.process(template, ctx);
         return htmlContent;
     }
 

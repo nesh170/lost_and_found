@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 
 @org.springframework.stereotype.Service
 public class FoundItemService extends Service {
+    private final static String EMAIL_TEMPLATE = "email_lost_template";
 
     public StdResponse getAllFoundItemsWithTags() {
         List<FoundItem> foundItems = itemAccessor.getAllFoundItemsWithTags();
@@ -35,7 +36,7 @@ public class FoundItemService extends Service {
     private void sendItemToLostPerson(LostItem lostItem, FoundItem foundItem) {
         User lostUser = authAccessor.getUserByUniqueID(lostItem.uniqueId);
         User foundUser = authAccessor.getUserByUniqueID(foundItem.uniqueId);
-        String emailHTML = emailTemplateClient.createEmail(lostUser.name,foundUser.email,foundUser.name,foundItem.pictureURL,new Locale("US"));
+        String emailHTML = emailTemplateClient.createEmail(lostUser.name,foundUser.email,foundUser.name,foundItem.pictureURL,EMAIL_TEMPLATE,new Locale("US"));
         try{
             sesClient.sendEmail(Stream.of(lostUser.email).collect(Collectors.toList()),"Your Lost Item Is Found",emailHTML);
         }
