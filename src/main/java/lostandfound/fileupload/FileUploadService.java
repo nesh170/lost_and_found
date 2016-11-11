@@ -1,11 +1,13 @@
 package lostandfound.fileupload;
 
+import lostandfound.exceptions.FileUploadException;
 import lostandfound.std.Service;
 import lostandfound.std.models.StdResponse;
 import lostandfound.std.models.StdResponseWithBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -16,14 +18,17 @@ public class FileUploadService extends Service{
         String originalFileName = multiPartFile.getOriginalFilename();
         File file = new File(originalFileName);
         try {
-            multiPartFile.transferTo(file);
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(multiPartFile.getBytes());
+            fos.close();
             String key = generateKey(file);
-            s3Client.addFile(key, file);
-            return new StdResponseWithBody(200, true, "Successfully uploaded a file", key);
+            String url = s3Client.addFile(key, file);
+            file.delete();
+            return new StdResponseWithBody(200, true, "Successfully uploaded a file", url);
         }
         catch (Exception exception) { //IOException and IllegalStateExceptions can possibly be thrown
-            exception.printStackTrace();
-            return new StdResponse(500, false, "File failed to upload");
+            throw new FileUploadException("File Upload failed for " + originalFileName);
         }
     }
 
