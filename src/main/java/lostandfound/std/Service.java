@@ -8,6 +8,7 @@ import utilities.PropertiesLoader;
 import utilities.ThymeleafEmailClient;
 import utilities.aws.S3Client;
 import utilities.aws.SESClient;
+import utilities.streameroitclient.StreamerOitClient;
 
 import java.util.Properties;
 
@@ -19,6 +20,7 @@ public class Service {
     public final S3Client s3Client = new S3Client();
     public final SESClient sesClient = new SESClient();
     public final ThymeleafEmailClient emailTemplateClient = new ThymeleafEmailClient();
+    public final StreamerOitClient streamerOitClient = new StreamerOitClient();
 
     public final Properties generalProperties = PropertiesLoader.loadPropertiesFromPackage("general.properties");
 
