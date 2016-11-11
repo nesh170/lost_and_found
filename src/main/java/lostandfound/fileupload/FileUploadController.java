@@ -16,7 +16,6 @@ public class FileUploadController extends Controller {
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile multiPartFile ) {
-        System.out.println("File path is " + multiPartFile.getOriginalFilename());
         return wrap(fileUploadService.addFile(multiPartFile));
     }
 
