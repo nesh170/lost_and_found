@@ -108,6 +108,7 @@ public class MainController {
      */
     public String loginwelcome(@RequestParam(value="netid", required=false, defaultValue="NOT FOUND") String netid) {
         return "loginwelcome";
+
     }
 
 }

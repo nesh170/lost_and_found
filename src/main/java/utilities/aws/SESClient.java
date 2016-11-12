@@ -5,7 +5,9 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.*;
 import com.amazonaws.services.simpleemail.model.*;
 import lostandfound.exceptions.EmailException;
+import org.jooq.util.derby.sys.Sys;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SESClient extends AWSClient {
@@ -33,7 +35,7 @@ public class SESClient extends AWSClient {
             client.sendEmail(request);
         }
         catch (Exception exception) {
-            throw new EmailException("Email could not be sent");
+            throw new EmailException("Email is not verified " + Arrays.toString(toAddresses.toArray()));
         }
     }
 }

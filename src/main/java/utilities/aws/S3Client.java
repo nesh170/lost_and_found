@@ -11,9 +11,9 @@ public class S3Client extends AWSClient {
     private final AmazonS3 client = new AmazonS3Client();
     private final String PICTURE_BUCKET = property.getProperty("picture.bucket");
 
-    public String addFile(String key, File file){
-        PutObjectResult result = client.putObject(PICTURE_BUCKET,key,file);
-        return String.format("http://lostandfoundspringfinderzpicture.s3.amazonaws.com/%1s",key);
+    public String addFile(String key, File file) {
+        PutObjectResult result = client.putObject(PICTURE_BUCKET, key, file);
+        return String.format("http://lostandfoundspringfinderzpicture.s3.amazonaws.com/%1s", key);
     }
 
 }

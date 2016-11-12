@@ -59,6 +59,7 @@ fabric.properties
 #sensitive files
 gradle.properties
 /src/main/resources/aws.properties
+/src/main/resources/duke.properties
 /src/main/resources/application.properties
 
 #OSspecific
