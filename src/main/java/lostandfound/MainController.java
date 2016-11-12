@@ -61,17 +61,20 @@ public class MainController {
         return "Login Succeeded: " + access_token;
     }
 
+    @RequestMapping(value = "/welcome")
+    public String welcome() {
+        //model.addAttribute("response", response);
+        return "index";
+    }
+
     @RequestMapping("/authconfirm")
     public String authconfirm(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
         return "authorize";
     }
 
-    @RequestMapping("/loginfailure")
-    public String loginFailure() {
-        /*
-        This method will get the access token and redirect to front end
-         */
+    @RequestMapping(value = "/loginfailure")
+    public String loginFailure(@RequestParam(value="status", required=false, defaultValue="World") String status, Model model) {
+        model.addAttribute("status", status);
         return "index";
     }
 

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS auth_table(
   given_name VARCHAR(50) NOT NULL ,
   net_id     VARCHAR(10) NOT NULL UNIQUE,
   email      VARCHAR(256) NOT NULL UNIQUE,
+  auth_token VARCHAR(50) NOT NULL UNIQUE,
   CONSTRAINT PK_auth_table PRIMARY KEY (unique_id)
 );
 
