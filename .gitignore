@@ -60,3 +60,6 @@ fabric.properties
 gradle.properties
 /src/main/resources/aws.properties
 /src/main/resources/application.properties
+
+#OSspecific
+.DS_Store
