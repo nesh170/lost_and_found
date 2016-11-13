@@ -90,7 +90,10 @@ dependencies {
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
     //thymeleaf
-    compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'
+    //compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
+
 
 }
 
