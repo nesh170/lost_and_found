@@ -1,6 +1,7 @@
 package lostandfound.lostitem;
 
 import lostandfound.requestmodels.LostItemRequest;
+import lostandfound.requestmodels.MarkItemRequest;
 import lostandfound.std.Controller;
 import lostandfound.std.models.StdRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,20 @@ public class LostItemController extends Controller {
     public ResponseEntity add(@RequestBody LostItemRequest request){
         pre(request);
         return wrap(lostItemService.createLostItem(request));
+    }
+
+    @RequestMapping(value = "/allItemsByUser/{uniqueId}", method = RequestMethod.GET)
+    public ResponseEntity getLostItems(@PathVariable String uniqueId){
+        //TODO request method when the frontend is built so auth can happen
+        //pre(request);
+        return wrap(lostItemService.getAllLostItemsWithTags(uniqueId));
+    }
+
+    @RequestMapping(value = "/markItem", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity mark(@RequestBody MarkItemRequest request){
+        pre(request);
+        return wrap(lostItemService.markItemAsFound(request));
     }
 
 
