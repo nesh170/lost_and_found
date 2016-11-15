@@ -11,6 +11,10 @@ public class LostItem extends Item {
         this.foundId = foundId;
     }
 
+    public LostItem(Integer id, String geolocation, Timestamp timestamp, String uniqueID, List<String> tags, String pictureURL) {
+        super(id,geolocation,timestamp,uniqueID,tags,pictureURL);
+    }
+
     public LostItem(String geolocation, Timestamp timestamp, String uniqueID, List<String> tags){
         super(geolocation,timestamp,uniqueID,tags);
     }
