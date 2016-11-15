@@ -1,13 +1,5 @@
-package lostandfound;
+package lostandfound.auth;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import data.LostItem;
-import data.User;
-import data.accessors.AuthAccessor;
-import data.accessors.ItemAccessor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -21,16 +13,14 @@ import java.util.Arrays;
 
 import lostandfound.exceptions.AuthException;
 
-
 /**
- * Created by Ankit on 10/10/2016.
- * This class serves more as a proof of concept. Implementation is not there yet because we recently decided to use Spring
- * to build our RESTful service. The idea behind the endpoints below is to just show how it will work in general with Spring. Of course,
- * there will be many more endpoints in our application for the different screens and behaviors users can excpet to access.
+ * Created by jimmymosca on 11/14/16.
  */
 
+@RequestMapping("/")
 @Controller
-public class MainController {
+public class AuthController {
+
 
     @RequestMapping(value = "/authenticate/{test}", method = RequestMethod.GET)
     public ModelAndView authenticate(@PathVariable String test) {
