@@ -13,4 +13,11 @@ public class User {
         this.email = email;
     }
 
+    public boolean isSameUser(String id) {
+        if (this.uniqueId.equals(id)) {
+            return true;
+        }
+        return false;
+    }
+
 }

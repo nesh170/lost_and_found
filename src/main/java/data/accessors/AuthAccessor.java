@@ -34,4 +34,9 @@ public class AuthAccessor extends Accessor {
                 .insertInto(AUTH_TABLE,AUTH_TABLE.UNIQUE_ID,AUTH_TABLE.GIVEN_NAME,AUTH_TABLE.NET_ID,AUTH_TABLE.EMAIL)
                 .values(user.uniqueId,user.name,user.netId,user.email).execute();
     }
+
+    public int updateAuthToken(User user, String authToken) {
+        //return myContext.update(AUTH_TABLE).set(AUTH_TABLE.FOUND_ID,foundId).execute();
+        return 0;
+    }
 }

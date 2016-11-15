@@ -1,5 +1,6 @@
 package lostandfound.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +22,8 @@ import lostandfound.exceptions.AuthException;
 @Controller
 public class AuthController {
 
+    @Autowired
+    private AuthService service;
 
     @RequestMapping(value = "/authenticate/{test}", method = RequestMethod.GET)
     public ModelAndView authenticate(@PathVariable String test) {
@@ -64,21 +67,11 @@ public class AuthController {
         String apiURL = "https://api.colab.duke.edu/identity/v1/";
 
         ResponseEntity<String> response = restTemplate.exchange(apiURL, HttpMethod.GET, entity, String.class);
-        String[] bodyArr = response.getBody().split(",");
-        String netID = "";
-        for (int i = 0; i < bodyArr.length; i++) {
-            if (bodyArr[i].contains("netid")) {
-                String[] association = bodyArr[i].split(":");
-                netID = association[1].trim().replace("\"", "");
-            }
-        }
-        if (netID.equals("")) {
-            throw new AuthException("A valid netid could not be found");
-        }
         if (response.getStatusCodeValue() != 200) {
-            throw new AuthException("The request for the netID was bad");
+            throw new AuthException("The request for the user info was bad");
         }
-        return netID;
+        service.processLoginResponse(response, access_token);
+        return response.toString();
     }
 
     @RequestMapping("/authconfirm")
