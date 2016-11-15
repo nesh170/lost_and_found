@@ -19,21 +19,29 @@ public class AuthService extends Service{
         String[] bodyArr = response.getBody().split(",");
         HashMap<String, String> responseMap = new HashMap<String, String>();
         for (int i = 0; i < bodyArr.length; i++) {
-            String[] association = bodyArr[i].split(":");
-            String key = association[0].trim().replace("\"", "");
-            String value = association[1].trim().replace("\"", "");
-            if (!responseMap.containsKey(key)) {
-                responseMap.put(key, value);
+            if (bodyArr[i].contains(":")) {
+                String[] association = bodyArr[i].split(":");
+                String key = association[0].trim().replace("\"", "");
+                String value = association[1].trim().replace("\"", "");
+                if (!responseMap.containsKey(key)) {
+                    responseMap.put(key, value);
+                }
             }
         }
-        User currentUser = buildUser(responseMap);
-        User storedUser = authAccessor.getUserByUniqueID(currentUser.uniqueId);
+        User currentUser = buildUser(responseMap, authToken);
+        User storedUser;
+        try {
+            storedUser = authAccessor.getUserByUniqueID(currentUser.uniqueId);
+        } catch(NullPointerException e) {
+            authAccessor.createUser(currentUser);
+            storedUser = currentUser;
+        }
         if (currentUser.isSameUser(storedUser.uniqueId)) {
             authAccessor.updateAuthToken(storedUser, authToken);
         }
     }
 
-    private User buildUser(Map<String, String> map) {
+    private User buildUser(Map<String, String> map, String authToken) {
         String netId = map.get("netid");
         String uniqueId = map.get("duDukeID");
         String name = map.get("displayName");
@@ -50,7 +58,10 @@ public class AuthService extends Service{
         if (email.isEmpty() || email.equals("")) {
             throw new AuthException("A valid email could not be found");
         }
-        User user = new User(name, uniqueId, netId, email);
+        if (authToken.isEmpty() || authToken.equals("")) {
+            throw new AuthException("A valid auth token could not be found");
+        }
+        User user = new User(name, uniqueId, netId, email, authToken);
         return user;
     }
 

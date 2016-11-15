@@ -1,5 +1,6 @@
 package lostandfound.std;
 
+import data.User;
 import data.accessors.AuthAccessor;
 import data.accessors.ItemAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,15 @@ public class Service {
     public JdbcTemplate jt;
 
     public boolean authorizeUser(String uniqueId, String accessToken) {
-        //TODO if contained in the database then allow user to use api, if then probably redirect to the lock screen?
+        User currentUser;
+        try {
+            currentUser = authAccessor.getUserByUniqueID(uniqueId);
+        } catch (NullPointerException e) {
+            return false;
+        }
+        if (!currentUser.auth_token.equals(accessToken)) {
+            return false;
+        }
         return true;
     }
 }
