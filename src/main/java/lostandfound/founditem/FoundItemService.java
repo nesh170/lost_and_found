@@ -28,7 +28,6 @@ public class FoundItemService extends Service {
     }
 
     public StdResponse createFoundItem(FoundItemRequest request) {
-        //TODO check to see whether this method can take in the picture and handle the S3
         FoundItem foundItem = new FoundItem(request.geolocation, request.timestamp, request.uniqueId, request.tags);
         int id = foundItemAccessor.insertFoundItemWithTags(foundItem);
         lostItemAccessor.getAllLostItemsWithTags().parallelStream()
@@ -45,7 +44,7 @@ public class FoundItemService extends Service {
         try {
             sesClient.sendEmail(Stream.of(lostUser.email).collect(Collectors.toList()), "Your Lost Item Is Found", emailHTML);
         } catch (Exception e) {
-            //TODO enable logging in the future but for now :-
+            //enable logging in the future but for now :-
             e.printStackTrace();
         }
     }
