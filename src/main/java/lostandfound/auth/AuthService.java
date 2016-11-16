@@ -34,6 +34,7 @@ public class AuthService extends Service{
             storedUser = authAccessor.getUserByUniqueID(currentUser.uniqueId);
         } catch(NullPointerException e) {
             authAccessor.createUser(currentUser);
+            sesClient.verifyEmail(currentUser.email);
             storedUser = currentUser;
         }
         if (currentUser.isSameUser(storedUser.uniqueId)) {
