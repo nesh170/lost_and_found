@@ -1,13 +1,6 @@
-package lostandfound;
+package lostandfound.auth;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import data.LostItem;
-import data.User;
-import data.accessors.AuthAccessor;
-import data.accessors.ItemAccessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -21,16 +14,16 @@ import java.util.Arrays;
 
 import lostandfound.exceptions.AuthException;
 
-
 /**
- * Created by Ankit on 10/10/2016.
- * This class serves more as a proof of concept. Implementation is not there yet because we recently decided to use Spring
- * to build our RESTful service. The idea behind the endpoints below is to just show how it will work in general with Spring. Of course,
- * there will be many more endpoints in our application for the different screens and behaviors users can excpet to access.
+ * Created by jimmymosca on 11/14/16.
  */
 
+@RequestMapping("/")
 @Controller
-public class MainController {
+public class AuthController {
+
+    @Autowired
+    private AuthService service;
 
     @RequestMapping(value = "/authenticate/{test}", method = RequestMethod.GET)
     public ModelAndView authenticate(@PathVariable String test) {
@@ -74,21 +67,11 @@ public class MainController {
         String apiURL = "https://api.colab.duke.edu/identity/v1/";
 
         ResponseEntity<String> response = restTemplate.exchange(apiURL, HttpMethod.GET, entity, String.class);
-        String[] bodyArr = response.getBody().split(",");
-        String netID = "";
-        for (int i = 0; i < bodyArr.length; i++) {
-            if (bodyArr[i].contains("netid")) {
-                String[] association = bodyArr[i].split(":");
-                netID = association[1].trim().replace("\"", "");
-            }
-        }
-        if (netID.equals("")) {
-            throw new AuthException("A valid netid could not be found");
-        }
         if (response.getStatusCodeValue() != 200) {
-            throw new AuthException("The request for the netID was bad");
+            throw new AuthException("The request for the user info was bad");
         }
-        return netID;
+        service.processLoginResponse(response, access_token);
+        return response.toString();
     }
 
     @RequestMapping("/authconfirm")
