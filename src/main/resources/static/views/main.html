@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Duke Lost and Found</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+</head>
+<body ng-controller = "main.js">
+<div style="width:100%">
+    <div style="font-size:30px; margin:0 auto; width:50%; text-align:center">
+        <div>
+            Welcome to Duke Lost and Found!
+        </div>
+        <div id="local" style="text-align:center">
+
+        </div>
+        <div id="prod" style="text-align:center">
+
+        </div>
+        <script type="text/javascript">
+            if (window.location.href.indexOf("localhost") != -1) {
+                var div = document.getElementById('local');
+                div.innerHTML = '<a style="font-size:16px" href="http://localhost:8080/authenticate/test" class="loginbutton">Login</a>';
+            }
+            else {
+                var div = document.getElementById('prod');
+                div.innerHTML = '<a style="font-size:16px" href="http://colab-sbx-122.oit.duke.edu:8080/authenticate/1" class="loginbutton">Login</a>';
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>
