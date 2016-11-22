@@ -48,6 +48,3 @@ CREATE TABLE IF NOT EXISTS found_tags(
   tags varchar(30) NOT NULL ,
   CONSTRAINT FK_found_tags_id FOREIGN KEY (id) REFERENCES found_items (id)
 );
-
-ALTER TABLE lost_items ADD CONSTRAINT FK_lost_items_found_id FOREIGN KEY (found_id) REFERENCES found_items (id);
-ALTER TABLE found_items ADD CONSTRAINT FK_found_items_lost_id FOREIGN KEY (lost_id) REFERENCES lost_items (id);
