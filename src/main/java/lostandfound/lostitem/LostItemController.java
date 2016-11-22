@@ -18,7 +18,7 @@ public class LostItemController extends Controller {
 
     @RequestMapping(value = "/allItems", method = RequestMethod.GET)
     public ResponseEntity getLostItems() {
-        //TODO request method when the frontend is built so auth can happen
+        //TODO request method when the frontend is built so login can happen
         //pre(request);
         return wrap(lostItemService.getAllLostItemsWithTags());
     }
@@ -32,7 +32,7 @@ public class LostItemController extends Controller {
 
     @RequestMapping(value = "/allItemsByUser/{uniqueId}", method = RequestMethod.GET)
     public ResponseEntity getLostItems(@PathVariable String uniqueId){
-        //TODO request method when the frontend is built so auth can happen
+        //TODO request method when the frontend is built so login can happen
         //pre(request);
         return wrap(lostItemService.getAllLostItemsWithTags(uniqueId));
     }

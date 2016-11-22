@@ -1,4 +1,4 @@
-package lostandfound.auth;
+package lostandfound.login;
 
 import data.User;
 import lostandfound.std.Service;
@@ -13,7 +13,7 @@ import java.util.Map;
  */
 
 @org.springframework.stereotype.Service
-public class AuthService extends Service{
+public class LoginService extends Service{
 
     protected void processLoginResponse(ResponseEntity<String> response, String authToken) {
         String[] bodyArr = response.getBody().split(",");
@@ -59,7 +59,7 @@ public class AuthService extends Service{
             throw new AuthException("A valid email could not be found");
         }
         if (authToken.isEmpty() || authToken.equals("")) {
-            throw new AuthException("A valid auth token could not be found");
+            throw new AuthException("A valid login token could not be found");
         }
         User user = new User(name, uniqueId, netId, email, authToken);
         return user;
