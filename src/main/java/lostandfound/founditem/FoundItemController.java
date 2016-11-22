@@ -15,7 +15,7 @@ public class FoundItemController extends Controller {
 
     @RequestMapping(value = "/allItems", method = RequestMethod.GET)
     public ResponseEntity getFoundItems() {
-        //TODO request method when the frontend is built so auth can happen
+        //TODO request method when the frontend is built so login can happen
         //pre(request);
         return wrap(foundItemService.getAllFoundItemsWithTags());
     }
