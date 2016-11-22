@@ -1,5 +1,6 @@
 package lostandfound.login;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.ui.Model;
 import lostandfound.exceptions.AuthException;
 
 /**
- * Created by jimmymosca on 11/14/16.
+ * Created by James Mosca on 11/14/16.
  */
 
 @RequestMapping("/")
