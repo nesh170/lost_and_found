@@ -2,11 +2,13 @@ package lostandfound.login;
 
 import lostandfound.std.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by jimmymosca on 11/14/16.
+ * Created by James Mosca on 11/14/16.
  */
 
 @RestController
