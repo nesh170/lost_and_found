@@ -24,7 +24,7 @@ public class SESClient extends AWSClient {
         VerifyEmailIdentityRequest identityRequest = new VerifyEmailIdentityRequest();
         this.client.verifyEmailIdentity(identityRequest.withEmailAddress(emailAddress));
     }
-    public void sendEmail(List<String> toAddresses, String subjectLine, String emailMessage) throws Exception {
+    public void sendEmail(List<String> toAddresses, String subjectLine, String emailMessage) {
         Destination destination = new Destination().withToAddresses(toAddresses);
         Content subject = new Content().withData(subjectLine);
         Content content = new Content().withData(emailMessage);

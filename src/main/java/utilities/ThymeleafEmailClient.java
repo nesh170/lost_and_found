@@ -35,9 +35,6 @@ public class ThymeleafEmailClient {
         ctx.setVariable("emailAdd", foundEmailAddress);
         ctx.setVariable("foundName", foundPerson);
         ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
-
-        //TODO remove the cid for emails :/
-
         // Create the HTML body using Thymeleaf
         final String htmlContent = this.templateEngine.process(template, ctx);
         return htmlContent;

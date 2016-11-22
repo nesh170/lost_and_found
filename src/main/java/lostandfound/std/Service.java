@@ -2,7 +2,9 @@ package lostandfound.std;
 
 import data.User;
 import data.accessors.AuthAccessor;
+import data.accessors.FoundItemAccessor;
 import data.accessors.ItemAccessor;
+import data.accessors.LostItemAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utilities.PropertiesLoader;
@@ -18,6 +20,8 @@ public class Service {
 
     public final AuthAccessor authAccessor = new AuthAccessor();
     public final ItemAccessor itemAccessor = new ItemAccessor();
+    public final LostItemAccessor lostItemAccessor = new LostItemAccessor();
+    public final FoundItemAccessor foundItemAccessor = new FoundItemAccessor();
     public final S3Client s3Client = new S3Client();
     public final SESClient sesClient = new SESClient();
     public final ThymeleafEmailClient emailTemplateClient = new ThymeleafEmailClient();
@@ -35,9 +39,6 @@ public class Service {
         } catch (NullPointerException e) {
             return false;
         }
-        if (!currentUser.auth_token.equals(accessToken)) {
-            return false;
-        }
-        return true;
+        return currentUser.auth_token.equals(accessToken);
     }
 }
