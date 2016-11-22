@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -20,6 +21,11 @@ public class AuthController {
         */
         String loginURI = authService.generateLoginURL(test);
         return new ModelAndView("redirect:" + loginURI);
+    }
+
+    @RequestMapping("/authconfirm")
+    public String authconfirm(@RequestParam(value="name", required=false, defaultValue="World") String name) {
+        return "authorize";
     }
 
 }
