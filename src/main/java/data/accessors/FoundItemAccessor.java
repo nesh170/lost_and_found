@@ -31,6 +31,14 @@ public class FoundItemAccessor extends Accessor {
         return getFoundItems(foundItems);
     }
 
+    public FoundItem getFoundItemById(Integer id){
+        Record foundItem = myContext.select().from(FOUND_ITEMS).where(FOUND_ITEMS.ID.equal(id)).fetchOne();
+        Map<Integer, Result<FoundTagsRecord>> foundTagsRecord = myContext.selectFrom(FOUND_TAGS).where(FOUND_TAGS.ID.equal(id)).fetch().intoGroups(FOUND_TAGS.ID);
+        Map<Integer, List<String>> foundTags = new HashMap<>();
+        foundTagsRecord.entrySet().forEach(entry -> foundTags.put(entry.getKey(), entry.getValue().getValues(FOUND_TAGS.TAGS)));
+        return generateFoundItem(foundItem,foundTags);
+    }
+
     private List<FoundItem> getFoundItems(Result<Record> foundItemsRecord) {
         Map<Integer, Result<FoundTagsRecord>> foundTagsRecord = myContext.selectFrom(FOUND_TAGS).fetch().intoGroups(FOUND_TAGS.ID);
         Map<Integer, List<String>> foundTags = new HashMap<>();
