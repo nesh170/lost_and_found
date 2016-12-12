@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @org.springframework.stereotype.Service
 public class FoundItemService extends Service {
     private final static String EMAIL_TEMPLATE = "email_lost_template";
-    private final static String SEND_EMAIL_TEMPLATE = "sned_email_to_founder_template";
+    private final static String SEND_EMAIL_TEMPLATE = "send_email_to_founder_template";
 
     public StdResponse getAllFoundItemsWithTags() {
         List<FoundItem> foundItems = foundItemAccessor.getAllFoundItemsWithTags();
