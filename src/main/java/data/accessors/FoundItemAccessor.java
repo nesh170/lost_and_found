@@ -49,8 +49,8 @@ public class FoundItemAccessor extends Accessor {
 
     public int insertFoundItemWithTags(Item foundItem) {
         FoundItemsRecord outputFoundItem = myContext.insertInto(FOUND_ITEMS,
-                FOUND_ITEMS.GEOLOCATION, FOUND_ITEMS.TIME_STAMP, FOUND_ITEMS.USER_UNIQUE_ID)
-                .values(foundItem.location, foundItem.timestamp, foundItem.uniqueId).returning(FOUND_ITEMS.ID).fetchOne();
+                FOUND_ITEMS.GEOLOCATION, FOUND_ITEMS.TIME_STAMP, FOUND_ITEMS.USER_UNIQUE_ID, FOUND_ITEMS.PICTURE_URL)
+                .values(foundItem.location, foundItem.timestamp, foundItem.uniqueId, foundItem.pictureURL).returning(FOUND_ITEMS.ID).fetchOne();
         foundItem.id = outputFoundItem.value1();
         foundItem.tags.forEach(tag -> myContext.insertInto(FOUND_TAGS, FOUND_TAGS.ID, FOUND_TAGS.TAGS).values(foundItem.id, tag).execute());
         return foundItem.id;

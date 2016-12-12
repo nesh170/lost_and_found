@@ -18,17 +18,17 @@ public abstract class Item {
     public List<String> tags;
     public String pictureURL;
 
-    public Item(String location, Timestamp timestamp, String uniqueId, List<String> tags){
+    public Item(String location, Timestamp timestamp, String uniqueId, List<String> tags, String pictureURL){
         this.location = location;
         this.timestamp = timestamp;
         this.uniqueId = uniqueId;
         this.tags = tags;
+        this.pictureURL = pictureURL;
     }
 
     public Item(Integer id, String location, Timestamp timestamp, String uniqueId, List<String> tags, String pictureURL){
-        this(location,timestamp,uniqueId,tags);
+        this(location,timestamp,uniqueId,tags,pictureURL);
         this.id = id;
-        this.pictureURL = pictureURL;
     }
 
     public int tagMatching(List<String> tags){

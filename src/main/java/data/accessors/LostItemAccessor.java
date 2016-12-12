@@ -31,8 +31,8 @@ public class LostItemAccessor extends Accessor {
 
     public int insertLostItemWithTags(Item lostItem) {
         LostItemsRecord outputLostItem = myContext.insertInto(LOST_ITEMS,
-                LOST_ITEMS.GEOLOCATION, LOST_ITEMS.TIME_STAMP, LOST_ITEMS.USER_UNIQUE_ID)
-                .values(lostItem.location, lostItem.timestamp, lostItem.uniqueId).returning(LOST_ITEMS.ID).fetchOne();
+                LOST_ITEMS.GEOLOCATION, LOST_ITEMS.TIME_STAMP, LOST_ITEMS.USER_UNIQUE_ID, LOST_ITEMS.PICTURE_URL)
+                .values(lostItem.location, lostItem.timestamp, lostItem.uniqueId, lostItem.pictureURL).returning(LOST_ITEMS.ID).fetchOne();
         lostItem.id = outputLostItem.value1();
         lostItem.tags.forEach(tag -> myContext.insertInto(LOST_TAGS, LOST_TAGS.ID, LOST_TAGS.TAGS).values(lostItem.id, tag).execute());
         return lostItem.id;

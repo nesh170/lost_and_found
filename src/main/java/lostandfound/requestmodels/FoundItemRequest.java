@@ -10,5 +10,6 @@ public class FoundItemRequest extends StdRequest {
     public String geolocation;
     public Timestamp timestamp;
     public List<String> tags;
+    public String picture_url;
 
 }

@@ -27,7 +27,7 @@ public class LostItemService extends Service {
     }
 
     public StdResponse createLostItem(LostItemRequest lostItemRequest) {
-        LostItem lostItem = new LostItem(lostItemRequest.geolocation, lostItemRequest.timestamp, lostItemRequest.uniqueId, lostItemRequest.tags);
+        LostItem lostItem = new LostItem(lostItemRequest.geolocation, lostItemRequest.timestamp, lostItemRequest.uniqueId, lostItemRequest.tags, lostItemRequest.picture_url);
         lostItem.id = lostItemAccessor.insertLostItemWithTags(lostItem);
         Map<Integer, List<FoundItem>> matchedFoundItem = new HashMap<>();
         foundItemAccessor.getAllFoundItemsWithTags().forEach(item -> {

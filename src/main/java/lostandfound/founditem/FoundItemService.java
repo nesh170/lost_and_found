@@ -28,7 +28,7 @@ public class FoundItemService extends Service {
     }
 
     public StdResponse createFoundItem(FoundItemRequest request) {
-        FoundItem foundItem = new FoundItem(request.geolocation, request.timestamp, request.uniqueId, request.tags);
+        FoundItem foundItem = new FoundItem(request.geolocation, request.timestamp, request.uniqueId, request.tags, request.picture_url);
         int id = foundItemAccessor.insertFoundItemWithTags(foundItem);
         lostItemAccessor.getAllLostItemsWithTags().parallelStream()
                 .filter(lostItem -> Math.abs(foundItem.tagMatching(lostItem.tags) - foundItem.tags.size()) <= Integer.parseInt(generalProperties.getProperty("matching.difference")))
