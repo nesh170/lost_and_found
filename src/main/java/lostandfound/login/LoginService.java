@@ -7,6 +7,7 @@ import lostandfound.std.models.StdResponseWithBody;
 import org.springframework.http.*;
 import lostandfound.exceptions.AuthException;
 import org.springframework.web.client.RestTemplate;
+import utilities.aws.SESClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class LoginService extends Service{
             storedUser = authAccessor.getUserByUniqueID(currentUser.uniqueId);
         } catch(NullPointerException e) {
             authAccessor.createUser(currentUser);
+            sesClient.verifyEmail(currentUser.email);
             storedUser = currentUser;
         }
         if (currentUser.isSameUser(storedUser.uniqueId)) {
