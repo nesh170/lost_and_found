@@ -40,4 +40,5 @@ public class ThymeleafEmailClient {
         return htmlContent;
     }
 
+
 }

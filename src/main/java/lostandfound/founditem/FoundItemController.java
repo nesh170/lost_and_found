@@ -1,6 +1,7 @@
 package lostandfound.founditem;
 
 import lostandfound.requestmodels.FoundItemRequest;
+import lostandfound.requestmodels.FoundItemSendEmailRequest;
 import lostandfound.std.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,12 @@ public class FoundItemController extends Controller {
         //TODO request method when the frontend is built so auth can happen
         //pre(request);
         return wrap(foundItemService.getAllFoundItemsWithTags(uniqueId));
+    }
+
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
+    public ResponseEntity send(@RequestBody FoundItemSendEmailRequest request){
+        pre(request);
+        return wrap(foundItemService.sendEmail(request));
     }
 
 }

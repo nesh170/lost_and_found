@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<p>
+    Hello <span th:text="${lostName}">Name</span>,
+</p>
+
+<p>
+    I believe you have my lost item. Thanks :D. Can you contact me at
+    <a th:href="${emailAdd}"><span th:text="${foundName}">Person who found</span></a> so I could get it from you.
+
+</p>
+
+<p>
+    <img src="../../webapp/images/thymeleaf-banner.png" th:src="${imageResourceName}" />
+</p>
+<p>
+    Regards, <br />
+    &emsp; <em>Lost and Found Spring Finderz</em>
+</p>
+</body>
+</html>

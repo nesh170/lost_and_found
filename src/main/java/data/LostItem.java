@@ -15,8 +15,8 @@ public class LostItem extends Item {
         super(id,geolocation,timestamp,uniqueID,tags,pictureURL);
     }
 
-    public LostItem(String geolocation, Timestamp timestamp, String uniqueID, List<String> tags){
-        super(geolocation,timestamp,uniqueID,tags);
+    public LostItem(String geolocation, Timestamp timestamp, String uniqueID, List<String> tags, String pictureURL){
+        super(geolocation,timestamp,uniqueID,tags,pictureURL);
     }
 
     @Override
