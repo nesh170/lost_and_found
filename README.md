@@ -57,4 +57,10 @@ nohup java -jar build/libs/lost_and_found-0.1.0.jar &
 - Amazon 
 	- In order to use the Amazon AWS Java client, you have to set up the credentials based on the instructions to [create your credentials](http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
 
-
+Limitations
+-----------
+There are a few limitations to our systems and some bugs that need to be fixed:-
+ - Maximum file upload size is only 1MB
+ - Uploading a .png leads to a CORS error
+ - The current design has duplicated code between lostItem and foundItem (might change in the future)
+ - The tagMatching algorithm is very basic
